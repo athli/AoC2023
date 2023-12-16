@@ -6,7 +6,6 @@ class CamelHand:
         'A': 14,
         'K': 13,
         'Q': 12,
-        'J': 11,
         'T': 10,
         '9': 9,
         '8': 8,
@@ -15,7 +14,8 @@ class CamelHand:
         '5': 5,
         '4': 4,
         '3': 3,
-        '2': 2
+        '2': 2,
+        'J': 0
     }
 
     def __init__(self, _hand, _bid):
@@ -44,6 +44,15 @@ class CamelHand:
                 counts[card] = 1
             else:
                 counts[card] += 1
+        temp = 0
+        if 'J' in counts.keys():
+            if len(counts.keys()) != 1:
+                temp = counts['J']
+                del counts['J']
+                for key in counts.keys():
+                    if counts[key] == max(counts.values()):
+                        counts[key] += temp
+                        break
         level = max(counts.values())
         if level == 3 and 2 in counts.values():
             self.level = 3.5
